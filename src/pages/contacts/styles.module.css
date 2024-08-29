@@ -1,0 +1,10 @@
+.root {
+    padding: 8px;
+}
+
+.list_btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 16px;
+}

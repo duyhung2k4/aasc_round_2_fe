@@ -1,0 +1,32 @@
+:root {
+    --navbar-width: 300px;
+}
+
+.navbar {
+    width: var(--navbar-width);
+    min-height: 100vh;
+    background-color: #000;
+}
+
+.content {
+    width: calc(100vw - var(--navbar-width));
+    min-height: 100vh;
+}
+
+.root {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-weight: 600;
+}
