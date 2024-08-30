@@ -24,3 +24,7 @@ export type UpdateContactRequest = {
         "WEB"?: CRM_Multifield[]
     }
 }
+
+export type DeleteContactRequest = {
+    id: string
+}

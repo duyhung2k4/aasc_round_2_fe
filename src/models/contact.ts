@@ -1,7 +1,7 @@
 import { CRM_Multifield } from "./crm_multifield"
 
 export type ContactModel = {
-    ID: number
+    ID: string
     NAME: string
     LAST_NAME: string
     ADDRESS_REGION: string
@@ -9,5 +9,5 @@ export type ContactModel = {
     ADDRESS_CITY: string
     PHONE: CRM_Multifield[]
     EMAIL: CRM_Multifield[]
-    WEB: string[]
+    WEB: CRM_Multifield[]
 }

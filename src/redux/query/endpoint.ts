@@ -31,6 +31,16 @@ export const endPoint = {
             url: "api/contact/add",
             method: "POST",
             headers: HEADER.defaultHeader(),
+        }),
+        update: () => ({
+            url: "api/contact/update",
+            method: "PUT",
+            headers: HEADER.defaultHeader(),
+        }),
+        delete: () => ({
+            url: "api/contact/delete",
+            method: "DELETE",
+            headers: HEADER.defaultHeader(),
         })
     }
 }
