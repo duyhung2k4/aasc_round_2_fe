@@ -3,11 +3,15 @@ import { rootReducer } from "./reducer";
 import { authApi } from "./api/auth";
 import { userApi } from "./api/user";
 import { contactApi } from "./api/contact";
+import { requisitetApi } from "./api/requisite";
+import { bankApi } from "./api/bank";
 
 const middleware = [
     authApi.middleware,
     userApi.middleware,
     contactApi.middleware,
+    requisitetApi.middleware,
+    bankApi.middleware,
 ]
 
 const store = configureStore({

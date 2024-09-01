@@ -119,7 +119,7 @@ const ModalEditContact: React.FC = () => {
         <>
             <Modal
                 show={modal.status && modal.type !== "contact_delete"}
-                onHide={loading ? () => { } : () => setModal({ ...modal, status: false })}
+                // onHide={loading ? () => { } : () => setModal({ ...modal, status: false })}
             >
                 <Modal.Header closeButton={false}>
                     <Modal.Title>{TextTitle[modal.type]}</Modal.Title>

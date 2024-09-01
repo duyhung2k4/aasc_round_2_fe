@@ -27,4 +27,5 @@ export type UpdateContactRequest = {
 
 export type DeleteContactRequest = {
     id: string
+    requisiteId: string
 }

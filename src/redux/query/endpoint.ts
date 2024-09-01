@@ -42,5 +42,51 @@ export const endPoint = {
             method: "DELETE",
             headers: HEADER.defaultHeader(),
         })
+    },
+
+    requisite: {
+        getAll: () => ({
+            url: "api/requisite/list",
+            method: "GET",
+            headers: HEADER.defaultHeader(),
+        }),
+        add: () => ({
+            url: "api/requisite/add",
+            method: "POST",
+            headers: HEADER.defaultHeader(),
+        }),
+        update: () => ({
+            url: "api/requisite/update",
+            method: "PUT",
+            headers: HEADER.defaultHeader(),
+        }),
+        delete: () => ({
+            url: "api/requisite/delete",
+            method: "DELETE",
+            headers: HEADER.defaultHeader(),
+        })
+    },
+
+    bank: {
+        getAll: () => ({
+            url: "api/bank/list",
+            method: "GET",
+            headers: HEADER.defaultHeader(),
+        }),
+        add: () => ({
+            url: "api/bank/add",
+            method: "POST",
+            headers: HEADER.defaultHeader(),
+        }),
+        update: () => ({
+            url: "api/bank/update",
+            method: "PUT",
+            headers: HEADER.defaultHeader(),
+        }),
+        delete: () => ({
+            url: "api/bank/delete",
+            method: "DELETE",
+            headers: HEADER.defaultHeader(),
+        })
     }
 }

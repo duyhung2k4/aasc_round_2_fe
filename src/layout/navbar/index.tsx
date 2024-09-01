@@ -8,7 +8,7 @@ import classes from "./styles.module.css";
 
 const listNavbar = [
     ROUTER_APP.CONTACT,
-    ROUTER_APP.REQUISITE,
+    ROUTER_APP.BANK,
 ]
 
 const Navbar: React.FC = () => {

@@ -14,8 +14,8 @@ export const ROUTER_APP = {
         type: "protected",
         name: "Liên hệ",
     },
-    REQUISITE: {
-        href: "/requisite",
+    BANK: {
+        href: "/bank",
         type: "protected",
         name: "Tài khoản ngân hàng",
     }

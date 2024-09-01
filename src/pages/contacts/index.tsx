@@ -1,21 +1,22 @@
-import React, { createContext, useEffect, useMemo, useRef, useState } from "react";
-import Cookies from "js-cookie";
+import React, { createContext, useContext, useRef, useState } from "react";
 import ModalEditContact from "./components/modal/index.edit";
 import CardContact from "./components/card";
-
-import { Button } from "react-bootstrap";
-import { useListContactQuery } from "@/redux/api/contact";
-import { TOKEN_TYPE } from "@/models/variable";
-import { ContactModel } from "@/models/contact";
-
 import classes from "./styles.module.css";
 import ModalDeleteContact from "./components/modal/index.delete";
+
+import { Button } from "react-bootstrap";
+import { ContactModel } from "@/models/contact";
+import { useAppSelector } from "@/redux/hook";
+import { AppLayoutContext, TypeAppLayoutContext } from "@/layout/app";
 
 
 
 const Contact: React.FC = () => {
     const optionRef = useRef<HTMLDivElement>(null);
 
+    const { refetchContact } = useContext<TypeAppLayoutContext>(AppLayoutContext);
+
+    const contacts = useAppSelector(state => state.contactSlice.contacts);
     const [modal, setModal] = useState<StatusModalContact>({
         type: "contact_add",
         status: false,
@@ -23,25 +24,12 @@ const Contact: React.FC = () => {
 
     const [contactSelect, setContactSelect] = useState<ContactModel | null>(null);
 
-    const {
-        data,
-        refetch,
-    } = useListContactQuery(Cookies.get(TOKEN_TYPE.ACCESS_TOKEN) || "");
-
-    useEffect(() => {
-        refetch();
-    }, []);
-
     const openModal = (type: TYPE_MODAL_CONTACT) => {
         setModal({
             status: true,
             type,
         });
     }
-
-    const contacts = useMemo(() => {
-        return data?.data || [];
-    }, [data?.data]);
 
 
 
@@ -52,7 +40,7 @@ const Contact: React.FC = () => {
                 contactSelect,
                 setModal,
                 setContactSelect,
-                refetchContact: refetch,
+                refetchContact: refetchContact,
             }}
         >
             <div className={classes.root}>

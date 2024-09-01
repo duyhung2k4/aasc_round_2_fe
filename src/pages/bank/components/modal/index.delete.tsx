@@ -1,52 +1,47 @@
 import React, { useContext } from "react";
 import Cookies from "js-cookie";
 
-import { ContactContext, TypeContactContext } from "../..";
+import { BankContext, TypeBankContext } from "../..";
 import { Button, Modal, Spinner } from "react-bootstrap";
-import { useDeleteContactMutation } from "@/redux/api/contact";
 import { TOKEN_TYPE } from "@/models/variable";
-import { useAppSelector } from "@/redux/hook";
+import { useDeleteBankMutation } from "@/redux/api/bank";
 
 
-
-const ModalDeleteContact: React.FC = () => {
-
-    const { requisiteContactMap } = useAppSelector(state => state.contactSlice);
+const ModalDeleteBank: React.FC = () => {
 
     const {
         modal,
-        contactSelect,
+        bankSelect,
         setModal,
-        refetchContact,
-        setContactSelect,
-    } = useContext<TypeContactContext>(ContactContext);
+        refetchBank,
+        setBankSelect,
+    } = useContext<TypeBankContext>(BankContext);
 
-    const [ post, { isLoading } ] = useDeleteContactMutation();
+    const [ post, { isLoading } ] = useDeleteBankMutation();
 
     const handleDelete = async () => {
         const token = Cookies.get(TOKEN_TYPE.ACCESS_TOKEN);
-        if(!contactSelect || !token) return;
+        if(!bankSelect || !token) return;
 
         await post({
-            contact: { 
-                id: contactSelect.ID,
-                requisiteId: requisiteContactMap[contactSelect.ID].ID
+            bank: { 
+                id: bankSelect.ID,
             },
             token
         });
 
-        refetchContact();
+        refetchBank();
         setModal({
             ...modal,
             status: false,
         });
-        setContactSelect(null);
+        setBankSelect(null);
     }
 
     return (
         <>
             <Modal
-                show={modal.status && modal.type === "contact_delete"}
+                show={modal.status && modal.type === "bank_delete"}
                 // onHide={isLoading ? () => { } : () => setModal({ ...modal, status: false })}
             >
                 <Modal.Header closeButton={false}>
@@ -54,7 +49,7 @@ const ModalDeleteContact: React.FC = () => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Bạn có chắc chắn muốn xóa liên hệ này</p>                    
+                    <p>Bạn có chắc chắn muốn xóa tài khoản ngân hàng này</p>                    
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -63,7 +58,7 @@ const ModalDeleteContact: React.FC = () => {
                         disabled={isLoading}
                         onClick={() => setModal({ ...modal, status: false })}
                     >Đóng</Button>
-                    {modal.type !== "contact_detail" && 
+                    {modal.type !== "bank_detail" && 
                     <Button
                         variant="primary"
                         onClick={handleDelete}
@@ -81,4 +76,4 @@ const ModalDeleteContact: React.FC = () => {
     )
 }
 
-export default ModalDeleteContact;
+export default ModalDeleteBank;
