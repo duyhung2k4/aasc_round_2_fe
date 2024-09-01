@@ -1,8 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery, QueryReturnType } from "../query/baseQuery";
 import { endPoint } from "../query/endpoint";
-import { LoginResponse } from "@/dto/response/auth";
-import { LoginRequest } from "@/dto/request/auth";
+import { LoginResponse, RegisterRepsone } from "@/dto/response/auth";
+import { AcceptCodeRequest, LoginRequest, RegisterRequest } from "@/dto/request/auth";
 
 export const authApi = createApi({
     reducerPath: "authApi",
@@ -13,10 +13,24 @@ export const authApi = createApi({
                 ...endPoint.auth.login(),
                 data: payload
             })
-        })
+        }),
+        register: builder.mutation<QueryReturnType<RegisterRepsone>, RegisterRequest>({
+            query: (payload) => ({
+                ...endPoint.auth.register(),
+                data: payload
+            })
+        }),
+        acceptCode: builder.mutation<QueryReturnType<boolean>, AcceptCodeRequest>({
+            query: (payload) => ({
+                ...endPoint.auth.acceptCode(),
+                data: payload
+            })
+        }),
     })
 })
 
 export const {
     useLoginMutation,
+    useRegisterMutation,
+    useAcceptCodeMutation,
 } = authApi;

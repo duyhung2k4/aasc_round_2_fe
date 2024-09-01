@@ -1,6 +1,7 @@
 export enum TOKEN_TYPE {
   ACCESS_TOKEN = "access_token",
-  APP_ID = "app_id"
+  APP_ID = "app_id",
+  ID_ACCEPT_CODE = "id_accept_code",
 }
 
 export const DEPARTMENT: Record<number, string> = {

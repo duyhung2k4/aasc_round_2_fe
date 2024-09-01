@@ -6,6 +6,7 @@ import { Button, Modal, Spinner } from "react-bootstrap";
 import { useDeleteContactMutation } from "@/redux/api/contact";
 import { TOKEN_TYPE } from "@/models/variable";
 import { useAppSelector } from "@/redux/hook";
+import { AppLayoutContext, TypeAppLayoutContext } from "@/layout/app";
 
 
 
@@ -17,9 +18,10 @@ const ModalDeleteContact: React.FC = () => {
         modal,
         contactSelect,
         setModal,
-        refetchContact,
         setContactSelect,
     } = useContext<TypeContactContext>(ContactContext);
+
+    const { refetchContact, refetchRequisite } = useContext<TypeAppLayoutContext>(AppLayoutContext);
 
     const [ post, { isLoading } ] = useDeleteContactMutation();
 
@@ -36,6 +38,7 @@ const ModalDeleteContact: React.FC = () => {
         });
 
         refetchContact();
+        refetchRequisite();
         setModal({
             ...modal,
             status: false,

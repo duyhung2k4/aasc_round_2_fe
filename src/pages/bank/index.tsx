@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import CardBank from "./components/card";
 
 import { TOKEN_TYPE } from "@/models/variable";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { BankModel } from "@/models/bank";
 import { useListBankQuery } from "@/redux/api/bank";
 
@@ -26,6 +26,7 @@ const Bank: React.FC = () => {
     const {
         data,
         refetch,
+        isLoading,
     } = useListBankQuery(Cookies.get(TOKEN_TYPE.ACCESS_TOKEN) || "");
 
     useEffect(() => {
@@ -93,11 +94,23 @@ const Bank: React.FC = () => {
                     style={{
                         height: `calc(100vh - ${optionRef.current?.offsetHeight}px - 8px)`,
                         marginTop: 8,
-                        overflow: "scroll"
+                        overflow: "scroll",
                     }}
                 >
                     {
-                        banks.map(item => <CardBank key={item.ID} {...item} />)
+                        isLoading ?
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    width: "100%"
+                                }}
+                            >
+                                <Spinner />
+                            </div>
+                            :
+                            banks.map(item => <CardBank key={item.ID} {...item} />)
                     }
                 </div>
             </div>

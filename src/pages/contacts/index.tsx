@@ -1,22 +1,21 @@
-import React, { createContext, useContext, useRef, useState } from "react";
+import React, { createContext, useRef, useState } from "react";
 import ModalEditContact from "./components/modal/index.edit";
 import CardContact from "./components/card";
-import classes from "./styles.module.css";
 import ModalDeleteContact from "./components/modal/index.delete";
 
 import { Button } from "react-bootstrap";
 import { ContactModel } from "@/models/contact";
 import { useAppSelector } from "@/redux/hook";
-import { AppLayoutContext, TypeAppLayoutContext } from "@/layout/app";
+
+import classes from "./styles.module.css";
 
 
 
 const Contact: React.FC = () => {
     const optionRef = useRef<HTMLDivElement>(null);
 
-    const { refetchContact } = useContext<TypeAppLayoutContext>(AppLayoutContext);
-
     const contacts = useAppSelector(state => state.contactSlice.contacts);
+
     const [modal, setModal] = useState<StatusModalContact>({
         type: "contact_add",
         status: false,
@@ -40,7 +39,6 @@ const Contact: React.FC = () => {
                 contactSelect,
                 setModal,
                 setContactSelect,
-                refetchContact: refetchContact,
             }}
         >
             <div className={classes.root}>
@@ -82,14 +80,26 @@ const Contact: React.FC = () => {
                     }}
                 >
                     {
-                        contacts.map(item => <CardContact key={item.ID} {...item} />)
+                        // loadingContact ?
+                        //     <div
+                        //         style={{
+                        //             display: "flex",
+                        //             flexDirection: "column",
+                        //             alignItems: "center",
+                        //             width: "100%"
+                        //         }}
+                        //     >
+                        //         <Spinner />
+                        //     </div>
+                        //     :
+                            contacts.map(item => <CardContact key={item.ID} {...item} />)
                     }
                 </div>
             </div>
 
 
             <ModalEditContact />
-            <ModalDeleteContact/>
+            <ModalDeleteContact />
         </ContactContext.Provider>
     )
 }
@@ -109,7 +119,6 @@ export type TypeContactContext = {
     contactSelect: ContactModel | null
     setModal: (value: StatusModalContact) => void
     setContactSelect: (value: ContactModel | null) => void
-    refetchContact: () => void
 };
 
 export const ContactContext = createContext<TypeContactContext>({
@@ -117,7 +126,6 @@ export const ContactContext = createContext<TypeContactContext>({
     contactSelect: null,
     setModal: (_) => { },
     setContactSelect: (_) => { },
-    refetchContact: () => {},
 })
 
 export default Contact;

@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import Cookies from "js-cookie";
+import SelectInput from "@/components/Select";
 
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import { BankContext, TYPE_MODAL_BANK, TypeBankContext } from "../..";
 import { TOKEN_TYPE } from "@/models/variable";
 import { useAddBankMutation, useUpdateBankMutation } from "@/redux/api/bank";
+import { useAppSelector } from "@/redux/hook";
 
 import classes from "./styles.module.css";
-import SelectInput from "@/components/Select";
-import { useAppSelector } from "@/redux/hook";
 
 
 
@@ -91,6 +91,8 @@ const ModalEditBank: React.FC = () => {
         refetchBank();
     }
 
+
+    
     return (
         <>
             <Modal

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 
 import { Button, Form, Spinner } from "react-bootstrap";
-import { useLoginMutation } from "@/redux/api/auth";
+import { useRegisterMutation } from "@/redux/api/auth";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_APP } from "@/constants/router";
 import { TOKEN_TYPE } from "@/models/variable";
@@ -11,18 +11,22 @@ import classes from "./styles.module.css";
 
 
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const [clientId, setClientId] = useState<string>("");
+    const [clientSecret, setClientSecret] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const navigation = useNavigate();
 
-    const [post, { isLoading }] = useLoginMutation();
+    const [post, { isLoading }] = useRegisterMutation();
 
     const handleLogin = async () => {
         if (clientId.length === 0) return;
         const result = await post({
             client_id: clientId,
+            client_secret: clientSecret,
+            email: email,
             password: password,
         });
 
@@ -30,22 +34,27 @@ const Login: React.FC = () => {
             return;
         }
 
+        if(!result.data.data) {
+            return;
+        }
+
         Cookies.set(TOKEN_TYPE.APP_ID, clientId);
-        navigation(ROUTER_APP.CONTACT.href);
+        Cookies.set(TOKEN_TYPE.ID_ACCEPT_CODE, `${result.data.data.id_accept_code}`);
+        navigation(ROUTER_APP.ACCEPT_CODE.href);
     }
 
     return (
         <>
             <div className={classes.root}>
                 <div className={classes.box}>
-                    <p className={classes.title__login}>Đăng nhập</p>
-                    <p className={classes.title__welcome}>Chào mừng bạn quay lại</p>
+                    <p className={classes.title__login}>Đăng kí</p>
+                    <p className={classes.title__welcome}>Chào mừng tới AASC Round 2</p>
                     <p>
-                        Bạn chưa có tài khoản?&nbsp;
+                        Bạn đã có tài khoản?&nbsp;
                         <span 
                             className={classes.high__light} 
-                            onClick={() => navigation(ROUTER_APP.REGISTER.href)}
-                        >Đăng kí</span>
+                            onClick={() => navigation(ROUTER_APP.LOGIN.href)}
+                        >Đăng nhập</span>
                     </p>
 
                     <Form.Label htmlFor="form_client_id">Client ID</Form.Label>
@@ -56,7 +65,23 @@ const Login: React.FC = () => {
                         onChange={e => setClientId(e.target.value)}
                     />
 
-                    <Form.Label htmlFor="form_password">Mật khẩu</Form.Label>
+                    <Form.Label style={{ marginTop: 16 }} htmlFor="client_secret">Client secret</Form.Label>
+                    <Form.Control
+                        type="text"
+                        id="client_secret"
+                        value={clientSecret}
+                        onChange={e => setClientSecret(e.target.value)}
+                    />
+
+                    <Form.Label style={{ marginTop: 16 }} htmlFor="email">Email</Form.Label>
+                    <Form.Control
+                        type="text"
+                        id="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+
+                    <Form.Label style={{ marginTop: 16 }} htmlFor="form_password">Mật khẩu</Form.Label>
                     <Form.Control
                         type="password"
                         id="form_password"
@@ -71,7 +96,7 @@ const Login: React.FC = () => {
                         }}
                         onClick={handleLogin}
                     >
-                        {isLoading ? <Spinner size="sm" style={{ fontSize: 12 }} animation="border" /> : "Đăng nhập"}
+                        {isLoading ? <Spinner size="sm" style={{ fontSize: 12 }} animation="border" /> : "Đăng kí"}
                     </Button>
                 </div>
             </div>
@@ -79,4 +104,4 @@ const Login: React.FC = () => {
     )
 }
 
-export default Login;
+export default Register;

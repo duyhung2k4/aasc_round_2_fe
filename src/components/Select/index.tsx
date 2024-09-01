@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Form } from "react-bootstrap";
 
@@ -11,16 +11,21 @@ const SelectInput: React.FC<SelectProps> = (props) => {
     props.data.forEach((item) => {
         mapData[item.value] = item;
     });
-
-    const [value, setValue] = useState<{ label: string, value: string } | null>(props.value ? mapData[props.value] : null);
+    
+    const [value, setValue] = useState<{ label: string, value: string } | null>(null);
     const [focus, setFocus] = useState<boolean>(false);
     const containerRef = useRef<HTMLDivElement>(null);
-
+    
     const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
         if (!containerRef.current?.contains(e.relatedTarget as Node)) {
             setFocus(false);
         }
     };
+    
+    useEffect(() => {
+        if(!props.value) return;
+        setValue(mapData[props.value]);
+    }, [props.value]);
 
 
 

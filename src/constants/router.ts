@@ -4,6 +4,16 @@ export const ROUTER_APP = {
         type: "public",
         name: "Đăng nhập",
     },
+    REGISTER: {
+        href: "/register",
+        type: "public",
+        name: "Đăng nhập",
+    },
+    ACCEPT_CODE: {
+        href: "/accept-code",
+        type: "public",
+        name: "Đăng nhập",
+    },
     HOME: {
         href: "/",
         type: "protected",

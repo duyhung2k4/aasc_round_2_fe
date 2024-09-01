@@ -11,6 +11,16 @@ export const endPoint = {
             method: "POST",
             headers: HEADER.defaultHeader(),
         }),
+        register: () => ({
+            url: "api/auth/register",
+            method: "POST",
+            headers: HEADER.defaultHeader(),
+        }),
+        acceptCode: () => ({
+            url: "api/auth/accept-code",
+            method: "POST",
+            headers: HEADER.defaultHeader(),
+        }),
     },
 
     users: {

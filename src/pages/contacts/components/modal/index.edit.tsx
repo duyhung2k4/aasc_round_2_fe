@@ -8,6 +8,7 @@ import { AddContactRequest } from "@/dto/request/contact";
 import { TOKEN_TYPE } from "@/models/variable";
 
 import classes from "./styles.module.css";
+import { AppLayoutContext, TypeAppLayoutContext } from "@/layout/app";
 
 const formContactDefault: FormEditContact = {
     NAME: "",
@@ -27,8 +28,9 @@ const ModalEditContact: React.FC = () => {
         contactSelect,
         setModal,
         setContactSelect,
-        refetchContact,
     } = useContext<TypeContactContext>(ContactContext);
+
+    const { refetchContact, refetchRequisite } = useContext<TypeAppLayoutContext>(AppLayoutContext);
 
     const [post, { isLoading: loadingAdd }] = useAddContactMutation();
     const [put, { isLoading: loadingUpdate }] = useUpdateContactMutation();
@@ -113,6 +115,7 @@ const ModalEditContact: React.FC = () => {
         setContactSelect(null);
 
         refetchContact();
+        refetchRequisite();
     }
 
     return (

@@ -4,7 +4,7 @@ import AppLayout from "@/layout/app";
 
 import { ROUTER_APP } from "@/constants/router";
 import { Route, Routes } from "react-router-dom";
-import { PageContact, PageLogin, PageBank } from "./page";
+import { PageContact, PageLogin, PageBank, PageRegister, PageAcceptCode } from "./page";
 
 
 
@@ -14,6 +14,8 @@ const AppRouter: React.FC = () => {
             <Routes>
                 <Route element={<ProtectedLayout />}>
                     <Route path={ROUTER_APP.LOGIN.href} element={<PageLogin />} />
+                    <Route path={ROUTER_APP.REGISTER.href} element={<PageRegister />} />
+                    <Route path={ROUTER_APP.ACCEPT_CODE.href} element={<PageAcceptCode />} />
                     <Route element={<AppLayout/>}>
                         <Route path={ROUTER_APP.HOME.href} element={<PageContact />} />
                         <Route path={ROUTER_APP.CONTACT.href} element={<PageContact />} />
