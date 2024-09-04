@@ -28,5 +28,15 @@ export const ROUTER_APP = {
         href: "/bank",
         type: "protected",
         name: "Tài khoản ngân hàng",
+    },
+    TOKEN_CODE: {
+        href: "/token-code",
+        type: "protected",
+        name: "",
+    },
+    TOKEN_CODE_PENDING: {
+        href: "/token-code-pending",
+        type: "protected",
+        name: "",
     }
 }

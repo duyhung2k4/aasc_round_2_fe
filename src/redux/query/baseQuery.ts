@@ -3,6 +3,7 @@ import type { BaseQueryFn } from "@reduxjs/toolkit/query"
 import type { AxiosRequestConfig, AxiosError } from "axios"
 import Cookies from "js-cookie"
 import { TOKEN_TYPE } from "@/models/variable"
+import { ROUTER_APP } from "@/constants/router"
 
 
 export const axiosBaseQuery =
@@ -31,6 +32,11 @@ export const axiosBaseQuery =
 
                 if(result.data.newToken) {
                     Cookies.set(TOKEN_TYPE.ACCESS_TOKEN, result.data.newToken);
+                }
+                if(result.data.urlGetToken) {
+                    Cookies.set(TOKEN_TYPE.CURRENT_URL, window.location.pathname);
+                    Cookies.set(TOKEN_TYPE.RETURN_CODE_URL, `https://${result.data.urlGetToken}`);
+                    window.location.href = ROUTER_APP.TOKEN_CODE_PENDING.href;
                 }
 
                 return { data: result.data }

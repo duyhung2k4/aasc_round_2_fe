@@ -21,6 +21,11 @@ export const endPoint = {
             method: "POST",
             headers: HEADER.defaultHeader(),
         }),
+        updateToken: () => ({
+            url: "api/auth/update-token",
+            method: "POST",
+            headers: HEADER.defaultHeader(),
+        }),
     },
 
     users: {

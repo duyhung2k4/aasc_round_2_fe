@@ -7,3 +7,7 @@ export type RegisterRepsone = {
     expires: Date
     expires_repeat_code: Date
 }
+
+export type UpdateTokenResponse = {
+    access_token: string;
+}

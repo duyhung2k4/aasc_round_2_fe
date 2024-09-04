@@ -4,7 +4,7 @@ import AppLayout from "@/layout/app";
 
 import { ROUTER_APP } from "@/constants/router";
 import { Route, Routes } from "react-router-dom";
-import { PageContact, PageLogin, PageBank, PageRegister, PageAcceptCode } from "./page";
+import { PageContact, PageLogin, PageBank, PageRegister, PageAcceptCode, PageTokenCode, PageTokenCodePending } from "./page";
 
 
 
@@ -21,6 +21,8 @@ const AppRouter: React.FC = () => {
                         <Route path={ROUTER_APP.CONTACT.href} element={<PageContact />} />
                         <Route path={ROUTER_APP.BANK.href} element={<PageBank/>}/>
                     </Route>
+                    <Route path={ROUTER_APP.TOKEN_CODE.href} element={<PageTokenCode/>} />
+                    <Route path={ROUTER_APP.TOKEN_CODE_PENDING.href} element={<PageTokenCodePending/>} />
                 </Route>
             </Routes>
         </Suspense>
