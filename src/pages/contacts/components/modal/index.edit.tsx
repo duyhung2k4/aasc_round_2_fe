@@ -89,9 +89,9 @@ const ModalEditContact: React.FC = () => {
             ADDRESS_REGION: contact.ADDRESS_REGION,
             ADDRESS_PROVINCE: contact.ADDRESS_PROVINCE,
             ADDRESS_CITY: contact.ADDRESS_CITY,
-            PHONE: [{ VALUE: contact.PHONE, VALUE_TYPE: "WORK" }],
-            EMAIL: [{ VALUE: contact.EMAIL, VALUE_TYPE: "WORK" }],
-            WEB: [{ VALUE: contact.WEB, VALUE_TYPE: "WORK" }],
+            PHONE: [{ VALUE: contact.PHONE, ID: contactSelect?.PHONE?.[0]?.ID, VALUE_TYPE: "WORK" }],
+            EMAIL: [{ VALUE: contact.EMAIL, ID: contactSelect?.EMAIL?.[0]?.ID, VALUE_TYPE: "WORK" }],
+            WEB: [{ VALUE: contact.WEB, ID: contactSelect?.WEB?.[0]?.ID, VALUE_TYPE: "WORK" }],
         }
 
         await put({ contact: { id: contactSelect.ID, fields: data }, token });
@@ -122,7 +122,7 @@ const ModalEditContact: React.FC = () => {
         <>
             <Modal
                 show={modal.status && modal.type !== "contact_delete"}
-                // onHide={loading ? () => { } : () => setModal({ ...modal, status: false })}
+            // onHide={loading ? () => { } : () => setModal({ ...modal, status: false })}
             >
                 <Modal.Header closeButton={false}>
                     <Modal.Title>{TextTitle[modal.type]}</Modal.Title>
