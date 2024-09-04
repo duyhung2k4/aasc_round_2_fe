@@ -7,6 +7,7 @@ import { useDeleteContactMutation } from "@/redux/api/contact";
 import { TOKEN_TYPE } from "@/models/variable";
 import { useAppSelector } from "@/redux/hook";
 import { AppLayoutContext, TypeAppLayoutContext } from "@/layout/app";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 
 
@@ -22,6 +23,7 @@ const ModalDeleteContact: React.FC = () => {
     } = useContext<TypeContactContext>(ContactContext);
 
     const { refetchContact, refetchRequisite } = useContext<TypeAppLayoutContext>(AppLayoutContext);
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const [ post, { isLoading } ] = useDeleteContactMutation();
 
@@ -29,13 +31,20 @@ const ModalDeleteContact: React.FC = () => {
         const token = Cookies.get(TOKEN_TYPE.ACCESS_TOKEN);
         if(!contactSelect || !token) return;
 
-        await post({
+        const result = await post({
             contact: { 
                 id: contactSelect.ID,
                 requisiteId: requisiteContactMap[contactSelect.ID].ID
             },
             token
         });
+
+        if("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Xóa liên hệ thất bại",
+            })
+        }
 
         refetchContact();
         refetchRequisite();

@@ -9,6 +9,7 @@ import { useAddBankMutation, useUpdateBankMutation } from "@/redux/api/bank";
 import { useAppSelector } from "@/redux/hook";
 
 import classes from "./styles.module.css";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 
 
@@ -27,6 +28,7 @@ const ModalEditBank: React.FC = () => {
         setBankSelect,
         refetchBank,
     } = useContext<TypeBankContext>(BankContext);
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const { 
         requisites,
@@ -61,14 +63,26 @@ const ModalEditBank: React.FC = () => {
         const token = Cookies.get(TOKEN_TYPE.ACCESS_TOKEN);
         if (!token) return;
 
-        await post({ bank, token });
+        const result = await post({ bank, token });
+        if("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Thêm ngân hàng thất bại"
+            })
+        }
     };
 
     const handleUpdate = async () => {
         const token = Cookies.get(TOKEN_TYPE.ACCESS_TOKEN);
         if (!token || !bankSelect) return;
 
-        await put({ bank: { id: bankSelect.ID, fields: bank }, token });
+        const result = await put({ bank: { id: bankSelect.ID, fields: bank }, token });
+        if("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Sửa ngân hàng thất bại"
+            })
+        }
     };
 
     const handle = async (event: React.FormEvent) => {

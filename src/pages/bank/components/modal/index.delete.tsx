@@ -5,6 +5,7 @@ import { BankContext, TypeBankContext } from "../..";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import { TOKEN_TYPE } from "@/models/variable";
 import { useDeleteBankMutation } from "@/redux/api/bank";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 
 const ModalDeleteBank: React.FC = () => {
@@ -16,6 +17,7 @@ const ModalDeleteBank: React.FC = () => {
         refetchBank,
         setBankSelect,
     } = useContext<TypeBankContext>(BankContext);
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const [ post, { isLoading } ] = useDeleteBankMutation();
 
@@ -23,12 +25,18 @@ const ModalDeleteBank: React.FC = () => {
         const token = Cookies.get(TOKEN_TYPE.ACCESS_TOKEN);
         if(!bankSelect || !token) return;
 
-        await post({
+        const result = await post({
             bank: { 
                 id: bankSelect.ID,
             },
             token
         });
+        if("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Xóa ngân hàng thất bại"
+            })
+        }
 
         refetchBank();
         setModal({

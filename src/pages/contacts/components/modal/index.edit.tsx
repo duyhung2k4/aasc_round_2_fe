@@ -9,6 +9,7 @@ import { TOKEN_TYPE } from "@/models/variable";
 
 import classes from "./styles.module.css";
 import { AppLayoutContext, TypeAppLayoutContext } from "@/layout/app";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 const formContactDefault: FormEditContact = {
     NAME: "",
@@ -31,6 +32,7 @@ const ModalEditContact: React.FC = () => {
     } = useContext<TypeContactContext>(ContactContext);
 
     const { refetchContact, refetchRequisite } = useContext<TypeAppLayoutContext>(AppLayoutContext);
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const [post, { isLoading: loadingAdd }] = useAddContactMutation();
     const [put, { isLoading: loadingUpdate }] = useUpdateContactMutation();
@@ -76,7 +78,13 @@ const ModalEditContact: React.FC = () => {
             WEB: [{ VALUE: contact.WEB, VALUE_TYPE: "WORK" }],
         }
 
-        await post({ contact: data, token });
+        const result = await post({ contact: data, token });
+        if("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Thêm liên hệ thất bại",
+            })
+        }
     };
 
     const handleUpdate = async () => {
@@ -94,7 +102,13 @@ const ModalEditContact: React.FC = () => {
             WEB: [{ VALUE: contact.WEB, ID: contactSelect?.WEB?.[0]?.ID, VALUE_TYPE: "WORK" }],
         }
 
-        await put({ contact: { id: contactSelect.ID, fields: data }, token });
+        const result = await put({ contact: { id: contactSelect.ID, fields: data }, token });
+        if("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Sửa liên hệ thất bại",
+            })
+        }
     };
 
     const handle = async (event: React.FormEvent) => {

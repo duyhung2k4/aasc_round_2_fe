@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Cookies from "js-cookie";
 
 import { Button, Form, Spinner } from "react-bootstrap";
@@ -8,6 +8,7 @@ import { ROUTER_APP } from "@/constants/router";
 import { TOKEN_TYPE } from "@/models/variable";
 
 import classes from "./styles.module.css";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 
 
@@ -16,6 +17,7 @@ const Register: React.FC = () => {
     const [clientSecret, setClientSecret] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const navigation = useNavigate();
 
@@ -31,6 +33,10 @@ const Register: React.FC = () => {
         });
 
         if ("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Đăng kí thất bại",
+            })
             return;
         }
 

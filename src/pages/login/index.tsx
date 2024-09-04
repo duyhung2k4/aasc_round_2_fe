@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Cookies from "js-cookie";
 
 import { Button, Form, Spinner } from "react-bootstrap";
@@ -8,12 +8,15 @@ import { ROUTER_APP } from "@/constants/router";
 import { TOKEN_TYPE } from "@/models/variable";
 
 import classes from "./styles.module.css";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 
 
 const Login: React.FC = () => {
     const [clientId, setClientId] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const navigation = useNavigate();
 
@@ -27,6 +30,10 @@ const Login: React.FC = () => {
         });
 
         if ("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Đăng nhập thất bại",
+            });
             return;
         }
 

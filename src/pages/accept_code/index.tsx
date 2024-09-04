@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import Cookies from "js-cookie";
 
 import { Button, Form, Spinner } from "react-bootstrap";
 import { useAcceptCodeMutation } from "@/redux/api/auth";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_APP } from "@/constants/router";
+import { TOKEN_TYPE } from "@/models/variable";
+import { ProtectedContext, TypeProtectedContext } from "@/layout/protected";
 
 import classes from "./styles.module.css";
-import Cookies from "js-cookie";
-import { TOKEN_TYPE } from "@/models/variable";
 
 
 
 const Login: React.FC = () => {
     const [acceptCode, setAcceptCode] = useState<string>("");
+    const { setModalError } = useContext<TypeProtectedContext>(ProtectedContext);
 
     const navigation = useNavigate();
 
@@ -27,6 +29,10 @@ const Login: React.FC = () => {
         });
 
         if ("error" in result) {
+            setModalError({
+                show: true,
+                mess: "Xác nhận thất bại"
+            })
             return;
         }
 
